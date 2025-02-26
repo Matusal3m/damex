@@ -9,7 +9,7 @@ import {
 const logger: RequestHandler = (
     req: Request,
     res: Response,
-    next: NextFunctio
+    next: NextFunction
 ) => {
     console.log('logger middleware...');
     next();
