@@ -30,7 +30,12 @@ export class Server {
                 controller
             );
 
-            this.app.use(router, globalMiddleware ?? {});
+            if (globalMiddleware) {
+                this.app.use(router, globalMiddleware);
+                return;
+            }
+
+            this.app.use(router);
         });
     }
 }
