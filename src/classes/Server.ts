@@ -1,4 +1,4 @@
-import { ServerConfigsParams } from '@commum/types/enums/ServerConfigsParams';
+import { ServerConfigsParams } from '../types/enums/ServerConfigsParams';
 import express, { type Application, type RequestHandler } from 'express';
 
 export class Server {
@@ -19,6 +19,8 @@ export class Server {
     }
 
     private setupControllers() {
+        this.app.use(express.json());
+
         this.controllers.forEach((controller) => {
             const router = Reflect.getOwnMetadata(
                 ServerConfigsParams.Router,

@@ -1,4 +1,4 @@
-import { ServerConfigsParams } from '@commum/types/enums/ServerConfigsParams';
+import { ServerConfigsParams } from '../types/enums/ServerConfigsParams';
 import type { RequestHandler } from 'express';
 
 export function GlobalMiddleware(handlers: RequestHandler[]) {

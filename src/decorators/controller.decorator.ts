@@ -1,6 +1,6 @@
-import { AppRouter } from '@commum/classes/AppRouter';
-import { ControllerMethodsParams } from '@commum/types/enums';
-import { ServerConfigsParams } from '@commum/types/enums/ServerConfigsParams';
+import { AppRouter } from '../classes/AppRouter';
+import { ControllerMethodsParams } from '../types/enums';
+import { ServerConfigsParams } from '../types/enums/ServerConfigsParams';
 
 export function Controller(path: string) {
     const router: any = AppRouter.router;

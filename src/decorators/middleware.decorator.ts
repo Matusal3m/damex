@@ -1,4 +1,4 @@
-import { ControllerMethodsParams } from '@commum/types/enums';
+import { ControllerMethodsParams } from '../types/enums';
 import type { RequestHandler } from 'express';
 
 export function Middleware(handlers: RequestHandler[]) {

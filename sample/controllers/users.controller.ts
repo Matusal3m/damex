@@ -1,4 +1,4 @@
-import { Controller, Get, Middleware } from '@commum/decorators';
+import { Controller, Get, Middleware } from '../../src/decorators';
 import {
     type NextFunction,
     type Request,
