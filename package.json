@@ -1,7 +1,13 @@
 {
-    "name": "dexp",
+    "name": "damex",
     "module": "src/server.ts",
     "type": "module",
+    "version": "1.0.0",
+    "author": {
+        "email": "matusalem.dev@gmail.com",
+        "name": "Matusal3m",
+        "url": "https://github.com/matusal3m"
+    },
     "scripts": {
         "start": "bun --watch run sample/server.ts"
     },
