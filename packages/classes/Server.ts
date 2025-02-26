@@ -8,9 +8,9 @@ export class Server {
         this.setupControllers();
     }
 
-    start(port?: number) {
-        this.app.listen(port ?? 3000, () => {
-            console.log(`Application running on port ${port ?? 3000} 🟢`);
+    start(port: number = 3000) {
+        this.app.listen(port, () => {
+            console.log(`Application running on port ${port} 🟢`);
         });
     }
 
