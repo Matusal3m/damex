@@ -9,7 +9,7 @@ import {
 const logger: RequestHandler = (
     req: Request,
     res: Response,
-    next: NextFunction
+    next: NextFunctio
 ) => {
     console.log('logger middleware...');
     next();
@@ -19,7 +19,7 @@ const logger: RequestHandler = (
 export class UsersController {
     constructor() {}
 
-    @Get('')
+    @Get()
     @Middleware([logger])
     getAll(req: Request, res: Response) {
         console.log('request accepted...');
