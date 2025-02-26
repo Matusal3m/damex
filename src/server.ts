@@ -1,3 +1,5 @@
+import 'reflect-metadata';
+
 import { Server } from '@commum/classes';
 import { UsersController } from './controllers';
 
