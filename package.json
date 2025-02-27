@@ -2,11 +2,15 @@
     "name": "damex",
     "module": "src/server.ts",
     "type": "module",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": {
         "email": "matusalem.dev@gmail.com",
         "name": "Matusal3m",
         "url": "https://github.com/matusal3m"
+    },
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts"
     },
     "scripts": {
         "start": "bun --watch run sample/server.ts"
