@@ -13,14 +13,12 @@
         "allowImportingTsExtensions": true,
         "verbatimModuleSyntax": true,
         "noEmit": true,
+        "outDir": "./dist",
 
         // Best practices
         "strict": true,
         "skipLibCheck": true,
         "noFallthroughCasesInSwitch": true,
-        "paths": {
-            "@commum/*": ["./src/*"]
-        },
 
         // Some stricter flags (disabled by default)
         "noUnusedLocals": false,

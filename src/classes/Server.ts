@@ -1,4 +1,4 @@
-import { ServerConfigsParams } from '../types/enums/ServerConfigsParams';
+import { ServerConfigsParams } from '../types/enums';
 import express, { type Application, type RequestHandler } from 'express';
 
 export class Server {
