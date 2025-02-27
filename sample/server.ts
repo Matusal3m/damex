@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-import { Server } from '../src/classes';
+import { Server } from '../';
 import { UsersController } from './controllers';
 
 const server = new Server([UsersController]);
