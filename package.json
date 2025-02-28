@@ -1,6 +1,6 @@
 {
     "name": "damex",
-    "module": "src/server.ts",
+    "module": "./lib/index.js",
     "type": "module",
     "version": "1.0.5",
     "author": {
@@ -8,20 +8,17 @@
         "name": "Matusal3m",
         "url": "https://github.com/matusal3m"
     },
-    "main": "./src/index.ts",
+    "main": "./lib/index.ts",
     "exports": {
-        ".": "./src/index.ts"
+        ".": "./lib/index.ts"
     },
     "scripts": {
-        "start": "bun --watch run sample/server.ts"
+        "build": "tsc"
     },
     "devDependencies": {
-        "@types/bun": "latest",
         "@types/cors": "^2.8.17",
-        "@types/express": "^5.0.0"
-    },
-    "peerDependencies": {
-        "typescript": "^5.0.0"
+        "@types/express": "^5.0.0",
+        "typescript": "^5.7.3"
     },
     "dependencies": {
         "cors": "^2.8.5",
