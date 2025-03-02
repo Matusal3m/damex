@@ -56,4 +56,4 @@ export class UsersController {
 ```
 
 # Warning!
-This package doesn't work with dependency injection for now. Because of this, and due to the way the routes are implemented, all services used inside controllers or other services must implement static methods.
+This package doesn't work with dependency injection for now. Because of this, and due to the way the routes are implemented, all services used inside controllers or other services must implement as static methods.
