@@ -1,6 +1,6 @@
 import { Injector } from '../src';
 import 'reflect-metadata';
-import { Inject } from '../src/decorators/injectable.decorator';
+import { Inject } from '../src/decorators/inject.decorator';
 
 class Foo {
     foo() {
