@@ -13,18 +13,18 @@
     },
     "scripts": {
         "test": "jest",
-        "build": "node build.js"
+        "build": "node build.js && tsc"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
         "@types/jest": "^30.0.0",
-        "esbuild": "0.25.8",
         "ts-jest": "^29.4.0"
     },
     "dependencies": {
         "cors": "^2.8.5",
         "express": "^4.21.2",
-        "reflect-metadata": "^0.2.2"
+        "reflect-metadata": "^0.2.2",
+        "typescript": "^5.8.3"
     }
 }
