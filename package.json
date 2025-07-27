@@ -12,12 +12,15 @@
         ".": "./index.js"
     },
     "scripts": {
+        "test": "jest",
         "build": "node build.js"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",
         "@types/express": "^5.0.0",
-        "esbuild": "0.25.8"
+        "@types/jest": "^30.0.0",
+        "esbuild": "0.25.8",
+        "ts-jest": "^29.4.0"
     },
     "dependencies": {
         "cors": "^2.8.5",

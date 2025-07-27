@@ -4,7 +4,7 @@ import express, { type Application, type RequestHandler } from 'express';
 export class Server {
     private readonly app: Application = express();
 
-    constructor(readonly controllers: any[]) {
+    constructor() {
         this.setupControllers();
     }
 
@@ -19,25 +19,19 @@ export class Server {
     }
 
     private setupControllers() {
-        this.app.use(express.json());
+        const controllers = Reflect.getMetadata(
+            ServerConfigsParams.Controllers,
+            Server,
+        );
 
-        this.controllers.forEach((controller) => {
-            const router = Reflect.getOwnMetadata(
+        this.use(express.json());
+
+        controllers.forEach((controller: any) => {
+            const router = Reflect.getMetadata(
                 ServerConfigsParams.Router,
-                controller
+                controller,
             );
-
-            const globalMiddleware = Reflect.getOwnMetadata(
-                ServerConfigsParams.GlobalMiddleware,
-                controller
-            );
-
-            if (globalMiddleware) {
-                this.app.use(router, globalMiddleware);
-                return;
-            }
-
-            this.app.use(router);
+            this.use(router);
         });
     }
 }

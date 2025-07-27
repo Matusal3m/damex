@@ -4,6 +4,10 @@ export class Injector {
     static inject(target: any): any {
         const params = Reflect.getMetadata(Design.ParamTypes, target);
 
+        if (!params) {
+            return new target();
+        }
+
         const paramsInstances: Array<any> = [];
 
         for (let i = 0; params.length > i; i++) {

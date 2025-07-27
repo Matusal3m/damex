@@ -1,4 +1,4 @@
-import { Injector } from '../classes';
+import { Injector, Server } from '../classes';
 import { AppRouter } from '../classes/AppRouter';
 import { ControllerMethodsParams } from '../types/enums';
 import { ServerConfigsParams } from '../types/enums/ServerConfigsParams';
@@ -19,6 +19,11 @@ export function Controller(path: string) {
                     ControllerMethodsParams.Method,
                 ) ?? '';
 
+            const controllerGlobalMiddleware = Reflect.getMetadata(
+                ServerConfigsParams.GlobalMiddleware,
+                target,
+            );
+
             const _middlewares =
                 Reflect.getOwnMetadata(
                     _actionName,
@@ -35,11 +40,24 @@ export function Controller(path: string) {
 
             router[_method](
                 `${path}${_path}`,
+                controllerGlobalMiddleware,
                 _middlewares,
                 instance[_actionName],
             );
         });
 
         Reflect.defineMetadata(ServerConfigsParams.Router, router, target);
+        appendController(target);
     };
+}
+
+function appendController(controller: any) {
+    const prevControllers =
+        Reflect.getMetadata(ServerConfigsParams.Controllers, Server) || [];
+
+    Reflect.defineMetadata(
+        ServerConfigsParams.Controllers,
+        [...prevControllers, controller],
+        Server,
+    );
 }
