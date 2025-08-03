@@ -23,6 +23,7 @@
     },
     "dependencies": {
         "cors": "^2.8.5",
+        "damex": "file:dist",
         "express": "^4.21.2",
         "reflect-metadata": "^0.2.2",
         "typescript": "^5.8.3"

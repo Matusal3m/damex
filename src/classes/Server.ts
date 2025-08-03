@@ -1,11 +1,17 @@
 import { ServerConfigsParams } from '../types/enums';
-import express, { type Application, type RequestHandler } from 'express';
+import express, {
+    type Express,
+    type Application,
+    type RequestHandler,
+} from 'express';
+
+type HttpClient = express.Application;
 
 export class Server {
-    private readonly app: Application;
+    private readonly app: HttpClient;
 
-    constructor() {
-        this.app = express();
+    constructor(app: HttpClient) {
+        this.app = app;
         this.setupControllers(this.app);
     }
 
@@ -19,7 +25,7 @@ export class Server {
         this.app.use(handlers);
     }
 
-    private setupControllers(app: Application) {
+    private setupControllers(app: HttpClient) {
         const controllers = Reflect.getMetadata(
             ServerConfigsParams.Controllers,
             Server,
