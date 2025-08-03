@@ -2,7 +2,7 @@ import { ControllerMethodsParams } from '../types/enums';
 import type { RequestHandler } from 'express';
 
 export function Middleware(handlers: RequestHandler[]) {
-    return function (target: any, propertyKey: string): void {
+    return function (target: any, propertyKey: string): any {
         Reflect.defineMetadata(
             propertyKey,
             handlers,
