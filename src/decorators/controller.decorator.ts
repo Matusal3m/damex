@@ -6,7 +6,7 @@ import { ServerConfigsParams } from '../types/enums/ServerConfigsParams';
 export function Controller(path: string) {
     const router: any = AppRouter.router;
 
-    return function (target: any) {
+    return function (target: any): any {
         const instance = Injector.inject(target);
         const prototype = Object.getPrototypeOf(instance);
         const [, ..._actionsNames] = Object.getOwnPropertyNames(prototype);

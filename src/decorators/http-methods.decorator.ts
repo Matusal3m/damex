@@ -2,18 +2,18 @@ import { ControllerMethodsParams, HttpMethods } from '../types/enums';
 
 function createHttpMethod(method: HttpMethods) {
     return function (path?: string) {
-        return function (target: any, propertyKey: string) {
+        return function (target: any, propertyKey: string): void {
             Reflect.defineMetadata(
                 propertyKey,
                 method,
                 target,
-                ControllerMethodsParams.Method
+                ControllerMethodsParams.Method,
             );
             Reflect.defineMetadata(
                 propertyKey,
                 path,
                 target,
-                ControllerMethodsParams.Path
+                ControllerMethodsParams.Path,
             );
         };
     };
