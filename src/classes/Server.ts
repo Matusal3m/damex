@@ -2,10 +2,11 @@ import { ServerConfigsParams } from '../types/enums';
 import express, { type Application, type RequestHandler } from 'express';
 
 export class Server {
-    private readonly app: Application = express();
+    private readonly app: Application;
 
     constructor() {
-        this.setupControllers();
+        this.app = express();
+        this.setupControllers(this.app);
     }
 
     start(port: number = 3000) {
@@ -18,20 +19,20 @@ export class Server {
         this.app.use(handlers);
     }
 
-    private setupControllers() {
+    private setupControllers(app: Application) {
         const controllers = Reflect.getMetadata(
             ServerConfigsParams.Controllers,
             Server,
         );
 
-        this.use(express.json());
+        app.use(express.json());
 
         controllers.forEach((controller: any) => {
             const router = Reflect.getMetadata(
                 ServerConfigsParams.Router,
                 controller,
             );
-            this.use(router);
+            app.use(router);
         });
     }
 }
