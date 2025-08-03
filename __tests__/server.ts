@@ -1,12 +1,17 @@
-import { Request, Response } from 'express';
-import { Controller, Get, Middleware, Server } from '../src';
+import type { NextFunction, Request, Response } from 'express';
+import { Controller, Get, GlobalMiddleware, Middleware, Server } from '../src';
+
+function handle(_req: Request, _res: Response, next: NextFunction) {
+    next();
+}
 
 @Controller('')
-@Middleware([])
-class MyController {
+@GlobalMiddleware([handle])
+export class MyController {
     constructor() {}
 
     @Get('')
+    @Middleware([handle])
     async help(req: Request, res: Response) {
         res.send('<div>oiiii</div>');
     }

@@ -2,7 +2,7 @@ import { ControllerMethodsParams, HttpMethods } from '../types/enums';
 
 function createHttpMethod(method: HttpMethods) {
     return function (path?: string) {
-        return function (target: any, propertyKey: string): void {
+        return function (target: any, propertyKey: any): any {
             Reflect.defineMetadata(
                 propertyKey,
                 method,
