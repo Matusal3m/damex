@@ -38,12 +38,11 @@ export function Controller(path: string) {
                     ControllerMethodsParams.Path,
                 ) ?? '';
 
-            router[_method](
-                `${path}${_path}`,
-                controllerGlobalMiddleware,
-                _middlewares,
+            router[_method](`${path}${_path}`, [
                 instance[_actionName],
-            );
+                ...controllerGlobalMiddleware,
+                ..._middlewares,
+            ]);
         });
 
         Reflect.defineMetadata(ServerConfigsParams.Router, router, target);
