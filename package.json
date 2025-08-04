@@ -13,18 +13,17 @@
     },
     "scripts": {
         "test": "jest",
-        "build": "node build.js && tsc"
+        "build": "node build.js && tsc | cd ./dist | npm publish"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",
-        "@types/express": "^5.0.0",
+        "@types/express": "^5.0.3",
         "@types/jest": "^30.0.0",
         "ts-jest": "^29.4.0"
     },
     "dependencies": {
         "cors": "^2.8.5",
-        "damex": "file:dist",
-        "express": "^4.21.2",
+        "express": "^5.1.0",
         "reflect-metadata": "^0.2.2",
         "typescript": "^5.8.3"
     }
