@@ -1,7 +1,7 @@
 {
     "name": "damex",
     "module": "./index.js",
-    "version": "2.0.12",
+    "version": "2.0.13",
     "author": {
         "email": "matusalem.dev@gmail.com",
         "name": "Matusal3m",
@@ -13,7 +13,7 @@
     },
     "scripts": {
         "test": "jest",
-        "build": "node build.js && tsc | cd ./dist | npm publish"
+        "build": "node build.js && tsc"
     },
     "devDependencies": {
         "@types/cors": "^2.8.17",
