@@ -52,10 +52,10 @@ export function Injectable() {
 export function Middleware(handlers: RequestHandler[]) {
     return function (target: any, propertyKey: any): any {
         Reflect.defineMetadata(
-            propertyKey,
+            CONTROLLER_MIDDLEWARE,
             handlers,
             target,
-            CONTROLLER_MIDDLEWARE,
+            propertyKey,
         );
     };
 }
