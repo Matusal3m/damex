@@ -1,5 +1,5 @@
 import 'reflect-metadata';
+import './di';
 
-export * from './classes';
 export * from './decorators';
-export * from './types';
+export { Server } from './http-core';

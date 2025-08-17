@@ -1,7 +1,7 @@
 {
     "name": "damex",
     "module": "./index.js",
-    "version": "2.0.13",
+    "version": "2.0.17",
     "author": {
         "email": "matusalem.dev@gmail.com",
         "name": "Matusal3m",
@@ -12,17 +12,12 @@
         ".": "./index.js"
     },
     "scripts": {
-        "test": "jest",
-        "build": "node build.js && tsc"
+        "build": "node --trace-warnings build.js && tsc"
     },
     "devDependencies": {
-        "@types/cors": "^2.8.17",
-        "@types/express": "^5.0.3",
-        "@types/jest": "^30.0.0",
-        "ts-jest": "^29.4.0"
+        "@types/express": "^5.0.3"
     },
     "dependencies": {
-        "cors": "^2.8.5",
         "express": "^5.1.0",
         "reflect-metadata": "^0.2.2",
         "typescript": "^5.8.3"
