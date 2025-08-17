@@ -1,75 +1,87 @@
-import type { RequestHandler } from "express";
+import type { RequestHandler } from 'express';
 import {
-  CONTROLLER_METHOD,
-  CONTROLLER_PATH,
-  CONTROLLER_CLASS_MIDDLEWARE,
-  CONTROLLER_MIDDLEWARE,
-} from "./consts";
-import { AppRouter, ControllerActionReader, Server } from "./http-core";
-import { DI } from "./di";
+    CONTROLLER_METHOD,
+    CONTROLLER_PATH,
+    CONTROLLER_CLASS_MIDDLEWARE,
+    CONTROLLER_MIDDLEWARE,
+} from './consts';
+import { AppRouter, ControllerActionReader, Server } from './http-core';
+import { DI } from './di';
 
 export function Controller(controllerPath?: string) {
-  const router = AppRouter.get();
+    const router = AppRouter.get();
 
-  return (target: any): any => {
-    const instance = DI.new(target);
-    const prototype = Object.getPrototypeOf(target);
-    const [, ...actionsNames] = Object.getOwnPropertyNames(prototype);
+    return (target: any): any => {
+        const instance = DI.new(target);
+        const prototype = Object.getPrototypeOf(instance);
+        const [, ...actionsNames] = Object.getOwnPropertyNames(prototype);
 
-    actionsNames.forEach((action) => {
-      const controllerActionReader = new ControllerActionReader(
-        action,
-        prototype,
-        target,
-      );
+        actionsNames.forEach((action) => {
+            const controllerActionReader = new ControllerActionReader(
+                action,
+                prototype,
+                target,
+            );
 
-      const actionPath = controllerActionReader.getPath();
-      const method = controllerActionReader.getMethod();
-      const middlewares = controllerActionReader.getMiddlewares();
-      const classMiddleware =
-        controllerActionReader.getControllerClassMiddleware();
+            const actionPath = controllerActionReader.getPath();
+            const method = controllerActionReader.getMethod();
+            const middlewares = controllerActionReader.getMiddlewares();
+            const classMiddlewares =
+                controllerActionReader.getControllerClassMiddlewares();
 
-      // @ts-ignore
-      router[method](
-        `${controllerPath}/${actionPath}`,
-        ...middlewares,
-        ...classMiddleware,
-        instance[action],
-      );
+            const handlers = [middlewares, classMiddlewares]
+                .flat(Infinity)
+                .filter((h) => !!h);
 
-      Server.appendControllerMetadata(target, router);
-    });
-  };
+            // @ts-ignore
+            router[method](
+                `${controllerPath}/${actionPath}`,
+                handlers,
+                instance[action].bind(instance),
+            );
+
+            Server.appendControllerMetadata(target, router);
+        });
+    };
+}
+
+export function Injectable() {
+    return (_: any): any => {};
 }
 
 export function Middleware(handlers: RequestHandler[]) {
-  return function (target: any, propertyKey: any): any {
-    Reflect.defineMetadata(
-      propertyKey,
-      handlers,
-      target,
-      CONTROLLER_MIDDLEWARE,
-    );
-  };
+    return function (target: any, propertyKey: any): any {
+        Reflect.defineMetadata(
+            propertyKey,
+            handlers,
+            target,
+            CONTROLLER_MIDDLEWARE,
+        );
+    };
 }
 
 export function ClassMiddleware(handlers: RequestHandler[]) {
-  return function (target: any): void {
-    Reflect.defineMetadata(CONTROLLER_CLASS_MIDDLEWARE, handlers, target);
-  };
-}
-
-function createHttpMethod(method: "get" | "post" | "put" | "delete" | "patch") {
-  return function (path?: string) {
-    return function (target: any, propertyKey: any): any {
-      Reflect.defineMetadata(propertyKey, method, target, CONTROLLER_METHOD);
-      Reflect.defineMetadata(propertyKey, path, target, CONTROLLER_PATH);
+    return function (target: any): void {
+        Reflect.defineMetadata(CONTROLLER_CLASS_MIDDLEWARE, handlers, target);
     };
-  };
 }
 
-export const Get = createHttpMethod("get");
-export const Post = createHttpMethod("post");
-export const Put = createHttpMethod("put");
-export const Patch = createHttpMethod("patch");
-export const Delete = createHttpMethod("delete");
+function createHttpMethod(method: 'get' | 'post' | 'put' | 'delete' | 'patch') {
+    return function (path?: string) {
+        return function (target: any, propertyKey: any): any {
+            Reflect.defineMetadata(
+                CONTROLLER_METHOD,
+                method,
+                target,
+                propertyKey,
+            );
+            Reflect.defineMetadata(CONTROLLER_PATH, path, target, propertyKey);
+        };
+    };
+}
+
+export const Get = createHttpMethod('get');
+export const Post = createHttpMethod('post');
+export const Put = createHttpMethod('put');
+export const Patch = createHttpMethod('patch');
+export const Delete = createHttpMethod('delete');

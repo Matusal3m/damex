@@ -1,29 +1,29 @@
 export class DI {
-  static new(target: any): any {
-    const params = DI.getParams(target);
+    static new(target: any): any {
+        const params = DI.getParams(target);
 
-    if (!params) {
-      return Reflect.construct(target, []);
+        if (!params) {
+            return new target();
+        }
+
+        const instantiatedParams = params.map(DI.instantiateAndDIParam);
+
+        return new target(...instantiatedParams);
     }
 
-    const instantiatedParams = params.map(DI.instantiateAndDIParam);
+    private static instantiateAndDIParam(param: any) {
+        if (!param) return;
 
-    return Reflect.construct(target, instantiatedParams);
-  }
+        const hasParams = DI.getParams(param);
 
-  private static instantiateAndDIParam(param: any) {
-    if (!param) return;
+        if (hasParams) {
+            return DI.new(param);
+        }
 
-    const hasParams = DI.getParams(param);
-
-    if (hasParams) {
-      return DI.new(param);
+        return new param();
     }
 
-    return Reflect.construct(param, []);
-  }
-
-  private static getParams(target: any): Array<any> {
-    return Reflect.getMetadata("design:paramtypes", target);
-  }
+    private static getParams(target: any): Array<any> {
+        return Reflect.getMetadata('design:paramtypes', target);
+    }
 }
