@@ -20,6 +20,33 @@ Receives an array with all the middleware methods that will be applied to all th
 
 Used on classes that required DI. If the class Already has a decorator (as @Controller), the @Inject is not required.
 
+```typescript
+    @Implementations
+```
+
+Receives an array with the concrete classes that will be injected into the constructor parameters.
+The implementations must follow the same order as the constructor arguments.
+If used, the @Inject decorator is not required.
+
+See a @Implementations usage example:
+
+```
+@Controller("/users")
+@Implementations([ConsoleLogger, FileLogger])
+class UserController {
+  constructor(
+    private readonly logger1: Logger,
+    private readonly logger2: Logger
+  ) {}
+
+  @Get("/")
+  getUsers(req: Request, res: Response) {
+    this.logger1.log("fetching...");
+    this.logger2.log("done!");
+  }
+}
+```
+
 ### Used in Methods
 
 ```typescript
