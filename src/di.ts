@@ -13,7 +13,7 @@ export class DI {
             : null;
 
         const instantiatedParams = params.map((param) =>
-            DI.instantiateAndDIParam(param, generator, target),
+            DI.instantiateAndDIParam(param, generator),
         );
 
         return new target(...instantiatedParams);
@@ -22,7 +22,6 @@ export class DI {
     private static instantiateAndDIParam(
         param: any,
         generator: Generator | null,
-        target: any,
     ) {
         if (!param) return;
 
@@ -33,24 +32,11 @@ export class DI {
             return DI.new(value);
         }
 
-        if (DI.isInterface(param) && !generator) {
-            console.warn(
-                `Some dependencies may have failed to inject into ${target.constructor.name}.
-             Make sure you are:
-                 - Using the @Implementations decorator, if using interfaces; or
-                 - Avoiding primitive types as dependency types.`,
-            );
-        }
-
         if (hasParams) {
             return DI.new(param);
         }
 
         return new param();
-    }
-
-    private static loadTargetInterfaces(target: any) {
-        const interfaces = Container.getGenerator(target);
     }
 
     private static isInterface(param: any) {
