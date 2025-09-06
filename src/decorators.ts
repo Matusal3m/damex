@@ -7,6 +7,7 @@ import {
 } from './consts';
 import { AppRouter, ControllerActionReader, Server } from './http-core';
 import { DI } from './di';
+import { Container } from './container';
 
 export function Controller(controllerPath?: string) {
     const router = AppRouter.get();
@@ -42,6 +43,12 @@ export function Controller(controllerPath?: string) {
 
             Server.appendControllerMetadata(target, router);
         });
+    };
+}
+
+export function Implementations(implementations: any[]) {
+    return (target: any) => {
+        Container.register(target, implementations);
     };
 }
 

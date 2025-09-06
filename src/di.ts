@@ -1,3 +1,5 @@
+import { Container } from './container';
+
 export class DI {
     static new(target: any): any {
         const params = DI.getParams(target);
@@ -6,21 +8,53 @@ export class DI {
             return new target();
         }
 
-        const instantiatedParams = params.map(DI.instantiateAndDIParam);
+        const generator = Container.hasTargetRegister(target)
+            ? Container.getGenerator(target)
+            : null;
+
+        const instantiatedParams = params.map((param) =>
+            DI.instantiateAndDIParam(param, generator, target),
+        );
 
         return new target(...instantiatedParams);
     }
 
-    private static instantiateAndDIParam(param: any) {
+    private static instantiateAndDIParam(
+        param: any,
+        generator: Generator | null,
+        target: any,
+    ) {
         if (!param) return;
 
         const hasParams = DI.getParams(param);
+
+        if (DI.isInterface(param) && generator) {
+            const value = generator.next().value;
+            return DI.new(value);
+        }
+
+        if (DI.isInterface(param) && !generator) {
+            console.warn(
+                `Some dependencies may have failed to inject into ${target.constructor.name}.
+             Make sure you are:
+                 - Using the @Implementations decorator, if using interfaces; or
+                 - Avoiding primitive types as dependency types.`,
+            );
+        }
 
         if (hasParams) {
             return DI.new(param);
         }
 
         return new param();
+    }
+
+    private static loadTargetInterfaces(target: any) {
+        const interfaces = Container.getGenerator(target);
+    }
+
+    private static isInterface(param: any) {
+        return param?.constructor.name === 'Function';
     }
 
     private static getParams(target: any): Array<any> {
