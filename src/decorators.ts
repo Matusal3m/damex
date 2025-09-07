@@ -36,7 +36,7 @@ export function Controller(controllerPath?: string) {
 
             // @ts-ignore
             router[method](
-                `${controllerPath}/${actionPath}`,
+                `${controllerPath}${actionPath}`,
                 handlers,
                 instance[action].bind(instance),
             );
