@@ -1,4 +1,4 @@
-import { CONTROLLER_METHOD, CONTROLLER_PATH } from '../controller/consts';
+import { CONTROLLER_METHOD, CONTROLLER_PATH } from '../consts';
 
 export function createHttpMethod(
     method: 'get' | 'post' | 'put' | 'delete' | 'patch',

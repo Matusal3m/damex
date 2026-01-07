@@ -3,7 +3,7 @@ import {
     CONTROLLER_METHOD_MIDDLEWARE,
     CONTROLLER_MIDDLEWARE,
     CONTROLLER_PATH,
-} from './consts';
+} from '../consts';
 
 export class ControllerReflection {
     constructor(
