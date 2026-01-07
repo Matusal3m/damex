@@ -27,12 +27,12 @@ export function Controller(controllerPath?: string): Decorator {
         const classMiddlewares =
             controllerReflection.getControllerMiddlewares();
 
-        router.use(classMiddlewares);
+        router.use(...classMiddlewares);
 
         for (const action of actionsNames) {
             const httpMethod = controllerReflection.getHttpMethod(action);
 
-            if (!httpMethod) return;
+            if (!httpMethod) continue;
 
             const actionPath = controllerReflection.getPath(action);
             const middlewares =
