@@ -1,7 +1,7 @@
 import { Router } from '../singleton/router';
 import { ControllerReflection } from './controller-reflection';
 
-export const sanitazePath = (path: string): string => {
+const sanitazePath = (path: string): string => {
     path = path.replaceAll(/(\/)+/g, '/');
     if (!path.startsWith('/')) path = `/${path}`;
     return path;
